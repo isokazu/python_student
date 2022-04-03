@@ -1,15 +1,6 @@
-# 随机图片
-* 从本地数据库读取图片上传到http
+# Python 学习随笔
+* 记录一些小项目加技术点
 ---
-### 技术点
-1. 套接字的使用
-2. pymysql连接数据库
-3. py线程的使用
-4. http协议处理
----
-### 数据库格式
-```sql
-CREATE TABLE image_db 
-(id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-image LONGBLOB DEFAULT NULL);
-```
+### 分支介绍
+1. > **http_url分支**  select模块使用,对不同的URL请求进行切割分别处理
+2. > **image_http_server** 通过pymysql连接数据库，读取数据库中的二进制图片并随机显示在网页中
