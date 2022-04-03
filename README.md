@@ -1,15 +1,9 @@
-# 随机图片
-* 从本地数据库读取图片上传到http
+# HTTPurl处理
+* 根据url路径不同返回不同网页页面
+
 ---
-### 技术点
-1. 套接字的使用
-2. pymysql连接数据库
-3. py线程的使用
-4. http协议处理
----
-### 数据库格式
-```sql
-CREATE TABLE image_db 
-(id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-image LONGBLOB DEFAULT NULL);
-```
+### 技术栈
+1. **套接字**  和浏览器进行数据传输
+2. **IO多路复用**  使用select模块，处理多个连接请求
+3. **open函数**  读取网页内容加载到内存
+4. **sqlit**  分割http请求，判断GET,POST请求并处理信息
