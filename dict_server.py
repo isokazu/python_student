@@ -11,7 +11,7 @@ from mysql_continul import DoDatabase
 from multiprocessing import Process
 
 # 不接收子进程信号，用于处理僵尸进程
-# signal.signal(signal.SIGCHLD, signal.SIG_IGN)
+signal.signal(signal.SIGCHLD, signal.SIG_IGN)
 
 # 创建数据库
 do_data = DoDatabase()
@@ -43,7 +43,7 @@ def server_register(conn, message, cul):
         PWD = hash_passwd(PASSWD)
         insert_success = do_data.insert_user(USER, PWD, cul)
         if insert_success == "insert ok":
-            ret_mes = "register_success"
+            ret_mes = "register_success\n%s" % USER
             conn.send(ret_mes.encode())
         else:
             ret_mes = "注册失败"
@@ -68,19 +68,19 @@ def server_land(conn, message, cul):
     if not have_user:
         ret_mes = "用户名不存在"
         conn.send(ret_mes.encode())
-    elif have_user[1] != PWD:
+    elif have_user[0] != PWD:
         ret_mes = "密码不正确"
         conn.send(ret_mes.encode())
     else:
-        ret_mes = "sign_in_success\n%i" % have_user[0]
+        ret_mes = "sign_in_success\n%s" % USER
         conn.send(ret_mes.encode())
 
 
 # 查单词
 def server_word(conn, message, cul):
-    user_id = message.split("\n")[1]
+    user_name = message.split("\n")[1]
     user_word = message.split("\n")[2]
-    do_data.insert_history(user_id, user_word, cul)
+    do_data.insert_history(user_name, user_word, cul)
     ret_word = do_data.select_word(user_word, cul)
     if not ret_word:
         ret_msg = "没有找到此单词"
@@ -92,8 +92,8 @@ def server_word(conn, message, cul):
 
 # 查询历史记录
 def server_history(conn, data, cul):
-    user_id = data.split("\n")[1]
-    word = do_data.select_history(user_id, cul)
+    user_name = data.split("\n")[1]
+    word = do_data.select_history(user_name, cul)
     if not word:
         res_msg = "没有历史记录"
         conn.send(res_msg.encode())
@@ -112,7 +112,6 @@ def request(conn):
             do_data.delete_cul(cul)
             return
         HEAD = data.split("\n")[0]
-        print(HEAD)
         if HEAD == "*DICT_USER_EXIT*":  # 客户端退出
             conn.close()
             do_data.delete_cul(cul)

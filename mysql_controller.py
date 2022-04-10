@@ -2,7 +2,7 @@ import pymysql
 
 
 class DoDatabase:
-    def __init__(self, host="127.0.0.1", user="root", password="密码", database="dict", port=3306,
+    def __init__(self, host="127.0.0.1", user="root", password="csy123,", database="dict", port=3306,
                  charset="utf8"):
         self.host = host
         self.user = user
@@ -11,11 +11,11 @@ class DoDatabase:
         self.port = port
         self.charset = charset
         self.sql_select_word = "SELECT word, idea FROM dict_table WHERE word=%s;"
-        self.sql_select_user = "SELECT id, passwd FROM user_table WHERE name=%s;"
-        self.sql_select_history = "SELECT word FROM history_table WHERE user_id=%s ORDER BY create_time DESC LIMIT 10;"
+        self.sql_select_user = "SELECT passwd FROM user_table WHERE name=%s;"
+        self.sql_select_history = "SELECT word FROM history_table WHERE name=%s ORDER BY create_time DESC LIMIT 10;"
 
         self.sql_insert_user = "INSERT INTO user_table (name, passwd) VALUES (%s,%s);"
-        self.sql_insert_history = "INSERT INTO history_table (user_id, word) VALUES (%s,%s);"
+        self.sql_insert_history = "INSERT INTO history_table (name, word) VALUES (%s,%s);"
 
         self.sql_delete_user = "DELETE TABLE user_table WHERE name=%s"
 
@@ -99,4 +99,4 @@ if __name__ == "__main__":
     cul = db.create_cul()
     result = db.user_in_database("管理员", cul)
     word = db.select_history(2, cul)
-    print(word)
+    print(result)

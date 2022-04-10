@@ -64,7 +64,7 @@ create_time DATETIME DEFAULT now() NOT NULL);
 * 查询单词协议：
     * "CLIENT_WORD\n用户ID\n单词"
 * 查询历史记录协议：
-    * "CLIENT_HISTORY\n用户ID"
+    * "CLIENT_HISTORY\n用户姓名"
 
 ### 功能逻辑介绍：
 
