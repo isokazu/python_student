@@ -7,7 +7,7 @@ import hashlib
 import signal
 import sys
 import re
-from mysql_continul import DoDatabase
+from mysql_controller import DoDatabase
 from multiprocessing import Process
 
 # 不接收子进程信号，用于处理僵尸进程
